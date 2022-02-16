@@ -9,7 +9,7 @@ class AccountRepository
         return apcu_fetch($id) ?: [];
     }
 
-    public static function deposit(string $id, int $amount): array
+    public static function deposit(string $id, float $amount): array
     {
         $account = apcu_fetch($id);
 
@@ -23,5 +23,10 @@ class AccountRepository
 
             return $account;
         }
+
+        $account['balance'] += $amount;
+        apcu_store($id, $account);
+
+        return $account;
     }
 }
