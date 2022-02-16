@@ -23,6 +23,13 @@ class BalanceController extends Controller
                 HttpStatus::NOT_FOUND,
                 0
             );
+
+            return;
         }
+
+        $this->sendResponse(
+            HttpStatus::OK,
+            $balance['balance']
+        );
     }
 }
