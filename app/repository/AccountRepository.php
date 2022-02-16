@@ -4,14 +4,14 @@ namespace app\repository;
 
 class AccountRepository
 {
-    public static function getBalanceById(string $id): array
+    public static function getAccountById(string $id): array
     {
         return apcu_fetch($id) ?: [];
     }
 
     public static function deposit(string $id, float $amount): array
     {
-        $account = apcu_fetch($id);
+        $account = self::getAccountById($id);
 
         if (!$account) {
             $account = [
@@ -32,7 +32,7 @@ class AccountRepository
 
     public static function withdraw(string $id, float $amount): array|bool
     {
-        $account = apcu_fetch($id);
+        $account = self::getAccountById($id);
 
         if (!$account) {
             return false;
