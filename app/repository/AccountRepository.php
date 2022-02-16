@@ -29,4 +29,18 @@ class AccountRepository
 
         return $account;
     }
+
+    public static function withdraw(string $id, float $amount): array|bool
+    {
+        $account = apcu_fetch($id);
+
+        if (!$account) {
+            return false;
+        }
+
+        $account['balance'] -= $amount;
+        apcu_store($id, $account);
+
+        return $account;
+    }
 }
