@@ -27,12 +27,16 @@ class Router
         ],
     ];
 
-    private array $return;
-
-    public static function route(string $requestUri)
+    public static function route(string $requestUri): void
     {
         $uri = UrlHelper::getUriWithoutArgs($requestUri);
         self::validateRoute($uri);
+
+        $controllerClass = self::ROUTES[$uri]['controller']; 
+        $controller = new $controllerClass();
+
+        $methodName = self::ROUTES[$uri]['methods'][$_SERVER['REQUEST_METHOD']];
+        $controller->$methodName();
     }
 
     private static function validateRoute($uri): void
