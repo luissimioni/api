@@ -19,7 +19,10 @@ abstract class Controller
     {
         $this->args = match($method) {
             HttpMethods::GET => $_GET ?? null,
-            HttpMethods::POST => $_POST ?? null,
+            HttpMethods::POST => !empty($_POST)
+                ? $_POST
+                : json_decode(file_get_contents('php://input'), true)
+                ?? null,
         };
     }
 
