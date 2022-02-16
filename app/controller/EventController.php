@@ -29,6 +29,11 @@ class EventController extends Controller
                 $this->eventWithdraw();
 
                 break;
+
+            case Events::TRANSFER:
+                $this->eventTransfer();
+
+                break;
         }
     }
 
@@ -72,6 +77,40 @@ class EventController extends Controller
             
             return;
         }
+
+        $this->sendResponse(
+            HttpStatus::CREATED,
+            $result
+        );
+    }
+
+    private function eventTransfer(): void
+    {
+        $this->setRequiredArgs([
+            'origin',
+            'amount',
+            'destination',
+        ]);
+        $this->validateArgs();
+
+        $result['origin'] = AccountRepository::withdraw(
+                $this->args['origin'],
+                $this->args['amount']
+        );
+
+        if (!$result['origin']) {
+            $this->sendResponse(
+                HttpStatus::NOT_FOUND,
+                0
+            );
+            
+            return;
+        }
+
+        $result['destination'] = AccountRepository::deposit(
+            $this->args['destination'],
+            $this->args['amount']
+        );
 
         $this->sendResponse(
             HttpStatus::CREATED,
