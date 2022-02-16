@@ -10,7 +10,7 @@ class Router
         '/reset' => [
             'controller' => 'app\controller\ResetController',
             'methods' => [
-                'POST' => 'reset',
+                'POST' => 'resetState',
             ],
         ],
         '/balance' => [

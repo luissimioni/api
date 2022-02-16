@@ -12,8 +12,8 @@ enum HttpStatus: int
     {
         return match($this) {
             self::OK => 'OK',
-            self::BAD_REQUEST => 'Bad request. Invalid params!',
-            self::NOT_FOUND => 'Endpoint not found or method not allowed.',
+            self::BAD_REQUEST => 'Bad request. Invalid params.',
+            self::NOT_FOUND => 'Not found.',
         };
     }
 }

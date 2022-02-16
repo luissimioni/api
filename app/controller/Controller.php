@@ -41,7 +41,7 @@ abstract class Controller
 
         $output = $output ?? $status->getStatusMessage();
 
-        echo json_encode($output);
+        echo is_array($output) ? json_encode($output) : $output;
 
         if ($kill) {
             exit;
