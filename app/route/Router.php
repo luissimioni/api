@@ -14,13 +14,13 @@ class Router
             ],
         ],
         '/balance' => [
-            'controller' => 'app\controller\BalanceController',
+            'controller' => 'app\controller\AccountController',
             'methods' => [
                 'GET' => 'getBalance',
             ],
         ],
         '/event' => [
-            'controller' => 'app\controller\EventController',
+            'controller' => 'app\controller\AccountController',
             'methods' => [
                 'POST' => 'callEvent',
             ],
