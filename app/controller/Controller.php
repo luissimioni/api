@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\enum\HttpMethods;
+use app\enum\HttpStatus;
 use app\helper\Validator;
 
 abstract class Controller
@@ -25,8 +26,24 @@ abstract class Controller
     protected function validateArgs(): void
     {
         if (!Validator::validateArgs($this->requiredArgs, $this->args)) {
-            http_response_code(400);
+            $this->sendResponse(
+                HttpStatus::BAD_REQUEST,
+                null,
+                true
+            );
+        }
+    }
 
+    protected function sendResponse(HttpStatus $status, array|string|int $output = null, bool $kill = false): void
+    {
+        header('Content-Type: application/json; charset=utf-8');
+        http_response_code($status->value);
+
+        $output = $output ?? $status->getStatusMessage();
+
+        echo json_encode($output);
+
+        if ($kill) {
             exit;
         }
     }
